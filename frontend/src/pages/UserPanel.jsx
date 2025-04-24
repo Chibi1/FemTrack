@@ -180,18 +180,45 @@ function UserPanel() {
     }
   };
 
-  // Render pojedynczego cyklu z danymi i edycją, jeśli aktualny
-  const renderCycle = (cycle, title, isCurrent = false) => {
-    if (!cycle) return null;
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm("Czy na pewno chcesz usunąć swoje konto? Tego nie da się cofnąć.");
+    if (!confirmed) return;
+  
+    const token = localStorage.getItem('token');
+  
+    try {
+      const res = await fetch('/api/auth/delete-self', {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+  
+      if (res.ok) {
+        localStorage.clear();
+        window.location.href = '/';
+      } else {
+        alert("Nie udało się usunąć konta.");
+      }
+    } catch {
+      alert("Wystąpił błąd po stronie serwera.");
+    }
+  };
+  
 
+  // Render pojedynczego cyklu z danymi i edycją, jeśli aktualny
+  const renderCycle = (cycle, title, isCurrent = false, extraInfo = null) => {
+    if (!cycle) return null;
+  
     return (
       <div className="cycle-box">
         <h3>{title}</h3>
         <p><strong>Start krwawienia:</strong> {new Date(cycle.startDate).toLocaleDateString()}</p>
         <p><strong>Koniec krwawienia:</strong> {new Date(cycle.endDate).toLocaleDateString()}</p>
         <p><strong>Długość okresu:</strong> {cycle.periodLength} dni</p>
-        <p><strong>Przewidywana owulacja:</strong> {new Date(cycle.ovulationDate).toLocaleDateString()}</p>
-
+        <p><strong>{cycle.ovulationType === 'confirmed' ? 'Potwierdzona' : 'Przewidywana'} owulacja:</strong> {new Date(cycle.ovulationDate).toLocaleDateString()}</p>
+        {extraInfo != null && (<p><strong>Długość całego cyklu:</strong> {extraInfo} dni</p>)}
+        
         {isCurrent && (
           <>
             <button onClick={() => setEditingMode(!editingMode)} className="edit-toggle-btn">
@@ -206,21 +233,34 @@ function UserPanel() {
       </div>
     );
   };
-
+  
   return (
     <div className="user-panel">
       <div className="header">
-        <h2>Witaj, {userName}!</h2>
-        <button
-          className="logout-button"
-          onClick={() => {
-            if (editingMode) return alert('Najpierw zakończ edycję okresu.');
-            localStorage.clear();
-            window.location.href = '/';
-          }}
-        >
-          Wyloguj się
-        </button>
+        <div>
+          <h2>Witaj, {userName}!</h2>
+        </div>
+        <div className="user-actions">
+          <button
+            className="logout-button"
+            onClick={() => {
+              if (editingMode) return alert('Najpierw zakończ edycję okresu.');
+              localStorage.clear();
+              window.location.href = '/';
+            }}
+          >
+            Wyloguj się
+          </button>
+          <button
+            className="delete-account-button"
+            onClick={() => {
+              if (editingMode) return alert('Najpierw zakończ edycję okresu.');
+              handleDeleteAccount();
+            }}
+          >
+            Usuń konto
+          </button>
+        </div>
       </div>
 
       <div className="main-content">
@@ -260,6 +300,14 @@ function UserPanel() {
               renderCycle(currentCycle, 'Aktualny cykl', true)
             ) : (
               <p className="no-cycle">Brak aktualnego cyklu</p>
+            )}
+            {previousCycle && currentCycle && (
+              renderCycle(
+                previousCycle,
+                'Poprzedni cykl',
+                false,
+                previousCycle.cycleLength
+              )
             )}
         </div>
       </div>
