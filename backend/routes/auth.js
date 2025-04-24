@@ -2,6 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');           // Haszowanie haseł
 const jwt = require('jsonwebtoken');          // Tworzenie i weryfikacja tokenów JWT
 const User = require('../models/User');       // Model użytkownika
+const authenticate = require('../middleware/authenticate');
+const requireRole = require('../middleware/reqRole');
 
 const router = express.Router();
 
@@ -72,6 +74,21 @@ router.post('/login', async (req, res) => {
 
   // Odpowiedź z tokenem i rolą użytkownika (do użycia w frontendzie)
   res.send({ token, role: user.role });
+});
+
+router.delete('/delete-self', authenticate, requireRole('user'), async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ error: 'Nie znaleziono użytkowniczki' });
+    }
+
+    await user.deleteOne(); 
+
+    res.json({ message: 'Użytkowniczka i jej dane zostały usunięte' });
+  } catch (err) {
+    res.status(500).json({ error: 'Błąd podczas usuwania konta' });
+  }
 });
 
 module.exports = router;

@@ -19,6 +19,21 @@ router.post('/start', authenticate, requireRole('user'), async (req, res) => {
   try {
     const start = new Date(startDate);
 
+    // Obliczenie długości poprzedniego cyklu (jeśli istnieje)
+    const lastCycle = await Cycle.findOne({ userId: req.user.userId }).sort({ startDate: -1 });
+
+    if (lastCycle) {
+      const previousStart = new Date(lastCycle.startDate);
+      const currentStart = new Date(start);
+      const diffMs = currentStart.getTime() - previousStart.getTime();
+      const length = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+      await Cycle.updateOne(
+        { _id: lastCycle._id },
+        { $set: { cycleLength: length } }
+      );
+    }
+
     // Obliczenie daty zakończenia okresu
     const end = new Date(start);
     end.setDate(end.getDate() + periodLength - 1);
@@ -154,10 +169,35 @@ router.delete('/:id', authenticate, requireRole('user'), async (req, res) => {
       return res.status(404).json({ error: 'Nie znaleziono cyklu' });
     }
 
+    // Aktualizacja owulacji w poprzednim cyklu, jeśli istniał
+    const previousCycle = await Cycle.findOne({
+      userId: req.user.userId,
+      startDate: { $lt: deleted.startDate }
+    }).sort({ startDate: -1 });
+
+    if (previousCycle) {
+      const predictedOvulation = new Date(previousCycle.startDate);
+      predictedOvulation.setDate(
+        predictedOvulation.getDate() + (previousCycle.averageLength - 14)
+      );
+
+      await Cycle.updateOne(
+        { _id: previousCycle._id },
+        {
+          $set: {
+            ovulationDate: predictedOvulation,
+            ovulationType: 'predicted'
+          }
+        }
+      );
+    }
+
     res.json({ message: 'Cykl usunięty pomyślnie' });
   } catch (err) {
+    console.error('Błąd podczas usuwania cyklu:', err);
     res.status(500).json({ error: 'Błąd podczas usuwania cyklu' });
   }
 });
+
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Cycle = require('./Cycle');
 
 /**
  * Model użytkownika aplikacji.
@@ -29,6 +30,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['user', 'doctor'],
     default: 'user'
+  }
+});
+
+userSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
+  try {
+    await Cycle.deleteMany({ userId: this._id });
+    next();
+  } catch (err) {
+    next(err);
   }
 });
 

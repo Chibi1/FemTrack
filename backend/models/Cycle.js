@@ -25,6 +25,11 @@ const cycleSchema = new mongoose.Schema({
     type: Number,
     default: 28
   },
+  // Długość danego cyklu
+  cycleLength: {
+    type: Number,
+    default: null
+  },
   // Liczba dni krwawienia
   periodLength: {
     type: Number,
