@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './UserPanel.css';
+import SymptomForm from '../components/SymptomForm';
+
 
 // Zwraca wszystkie dni między startDate a endDate (włącznie)
 // Wykorzystywane do podświetlania dni okresu w kalendarzu
@@ -25,21 +27,36 @@ const formatDateOnly = (date) => {
 };
 
 function UserPanel() {
-  // Dane użytkowniczki i aktualnie zaznaczona data w kalendarzu
+  // Dane użytkowniczki
   const [userName, setUserName] = useState('');
+
+  // Aktualnie wybrana data w kalendarzu
   const [calendarDate, setCalendarDate] = useState(new Date());
+
+  // Wybrany dzień w kalendarzu
+  const [selectedDay, setSelectedDay] = useState(null);
 
   // Dane związane z cyklami
   const [cycles, setCycles] = useState([]);
   const [currentCycle, setCurrentCycle] = useState(null);
   const [previousCycle, setPreviousCycle] = useState(null);
 
-  // Dane do oznaczania dni w kalendarzu
+  // Mapy i listy dat do podświetleń w kalendarzu
   const [periodDates, setPeriodDates] = useState([]);
   const [ovulationMap, setOvulationMap] = useState({});
+  const [symptomDates, setSymptomDates] = useState([]);
 
-  // Tryb edycji bieżącego cyklu
+  // Tryb edycji okresu
   const [editingMode, setEditingMode] = useState(false);
+
+  // Status zaznaczonego dnia
+  const [isPeriodDay, setIsPeriodDay] = useState(false);
+  const [isFuture, setIsFuture] = useState(false);
+
+  // Dane formularza objawów
+  const [showSymptomForm, setShowSymptomForm] = useState(false);
+  const [symptomData, setSymptomData] = useState(null);
+  
 
   // Pierwsze załadowanie: walidacja tokenu i pobranie danych użytkowniczki
   useEffect(() => {
@@ -64,6 +81,7 @@ function UserPanel() {
       });
 
     loadCycles();
+    loadSymptomDates();
   }, []);
 
   // Pobranie cykli z backendu i przygotowanie danych do kalendarza
@@ -138,7 +156,7 @@ function UserPanel() {
     }
   };
 
-  // Edycja długości bieżącego cyklu (skrót / wydłużenie)
+  // Edycja długości bieżącego cyklu (skrócenie / wydłużenie)
   const handleEditLength = async (delta) => {
     if (!currentCycle) return;
     const token = localStorage.getItem('token');
@@ -180,6 +198,66 @@ function UserPanel() {
     }
   };
 
+  // Obsługa kliknięcia w dzień kalendarza
+  const handleDayClick = async (date) => {
+    if (editingMode) return alert('Najpierw zakończ edycję okresu.');
+  
+    const today = new Date();
+    const clicked = new Date(date);
+    today.setHours(0, 0, 0, 0);
+    clicked.setHours(0, 0, 0, 0);
+  
+    setCalendarDate(clicked);
+    setSelectedDay(clicked);
+    setIsFuture(clicked.getTime() > today.getTime());
+    setIsPeriodDay(periodDates.includes(clicked.toDateString()));
+    setSymptomData(null); 
+    setShowSymptomForm(false); 
+  
+    // Pobierz dane objawów dla klikniętej daty
+    const token = localStorage.getItem('token');
+    const formattedDate = formatDateOnly(clicked);
+  
+    try {
+      const res = await fetch(`/api/symptoms/${formattedDate}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (res.ok) {
+        const data = await res.json();
+        setSymptomData(data);
+      } else if (res.status === 404) {
+        setSymptomData(null);
+      } 
+    } catch (err) {
+      console.error('Błąd sieci przy pobieraniu symptomów:', err);
+    }
+  };
+  
+  // Pobranie dat z zapisanymi objawami i ich formatowanie do wyświetlenia w kalendarzu
+  const loadSymptomDates = async () => {
+    const token = localStorage.getItem('token');
+  
+    try {
+      const res = await fetch('/api/symptoms', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      const data = await res.json();
+  
+      const formattedDates = data.map((d) => new Date(d).toDateString());
+  
+      setSymptomDates(formattedDates);
+  
+      return formattedDates;
+    } catch (err) {
+      console.error('Błąd przy pobieraniu listy dat symptomów:', err);
+    }
+  };
+  
+  // Usuwanie konta użytkowniczki
   const handleDeleteAccount = async () => {
     const confirmed = window.confirm("Czy na pewno chcesz usunąć swoje konto? Tego nie da się cofnąć.");
     if (!confirmed) return;
@@ -205,8 +283,7 @@ function UserPanel() {
     }
   };
   
-
-  // Render pojedynczego cyklu z danymi i edycją, jeśli aktualny
+  // Render pojedynczego cyklu z danymi i edycją, jeśli jest to aktualny cykl
   const renderCycle = (cycle, title, isCurrent = false, extraInfo = null) => {
     if (!cycle) return null;
   
@@ -218,7 +295,6 @@ function UserPanel() {
         <p><strong>Długość okresu:</strong> {cycle.periodLength} dni</p>
         <p><strong>{cycle.ovulationType === 'confirmed' ? 'Potwierdzona' : 'Przewidywana'} owulacja:</strong> {new Date(cycle.ovulationDate).toLocaleDateString()}</p>
         {extraInfo != null && (<p><strong>Długość całego cyklu:</strong> {extraInfo} dni</p>)}
-        
         {isCurrent && (
           <>
             <button onClick={() => setEditingMode(!editingMode)} className="edit-toggle-btn">
@@ -233,13 +309,13 @@ function UserPanel() {
       </div>
     );
   };
-  
+
+  // Render komponentu
   return (
     <div className="user-panel">
+      {/* Górny pasek z imieniem i przyciskami */}
       <div className="header">
-        <div>
-          <h2>Witaj, {userName}!</h2>
-        </div>
+        <h2>Witaj, {userName}!</h2>
         <div className="user-actions">
           <button
             className="logout-button"
@@ -253,23 +329,18 @@ function UserPanel() {
           </button>
           <button
             className="delete-account-button"
-            onClick={() => {
-              if (editingMode) return alert('Najpierw zakończ edycję okresu.');
-              handleDeleteAccount();
-            }}
+            onClick={handleDeleteAccount}
           >
             Usuń konto
           </button>
         </div>
       </div>
 
+      {/* Główna zawartość: kalendarz + info */}
       <div className="main-content">
         <div className="calendar-container">
           <Calendar
-            onChange={(date) => {
-              if (editingMode) return alert('Najpierw zakończ edycję okresu.');
-              setCalendarDate(date);
-            }}
+            onClickDay={handleDayClick}
             value={calendarDate}
             tileClassName={({ date }) => {
               const label = date.toDateString();
@@ -281,34 +352,75 @@ function UserPanel() {
               if (isPeriod) return 'period-day';
               return null;
             }}
+            tileContent={({ date, view }) => {
+              if (view === 'month') {
+                const label = date.toDateString();
+                if (symptomDates.includes(label)) {
+                  return <span className="symptom-indicator" title="Zapisane objawy">★</span>;
+                }
+              }
+              return null;
+            }}
           />
 
-          {calendarDate && !periodDates.includes(calendarDate.toDateString()) && (
-            <button
-              onClick={handleStartPeriod}
-              className="start-period-button"
-              disabled={editingMode}
-              style={editingMode ? { opacity: 0.4, pointerEvents: 'none' } : {}}
-            >
-              Zaznacz ten dzień jako początek okresu
-            </button>
+          {/* Przyciski pod kalendarzem */}
+          {selectedDay && !isFuture && (
+            <>
+              {!isPeriodDay && (
+                <button
+                  onClick={handleStartPeriod}
+                  className="start-period-button"
+                  disabled={editingMode}
+                  style={editingMode ? { opacity: 0.4, pointerEvents: 'none' } : {}}
+                >
+                  Zaznacz ten dzień jako początek okresu
+                </button>
+              )}
+              <button
+                onClick={() => setShowSymptomForm(true)}
+                className="start-period-button"
+                disabled={editingMode}
+                style={editingMode ? { opacity: 0.4, pointerEvents: 'none' } : {}}
+              >
+                Zanotuj objawy
+              </button>
+
+              {/* Formularz objawów w modalu */}
+              {showSymptomForm && (
+                <SymptomForm
+                  date={selectedDay}
+                  isPeriodDay={isPeriodDay}
+                  existingData={symptomData}
+                  onClose={() => setShowSymptomForm(false)}
+                  onSubmit={(data) => {
+                    const formatted = selectedDay.toDateString();
+                    setSymptomDates((prev) => {
+                      const newDates = new Set(prev);
+                      if (data) {
+                        newDates.add(formatted);
+                      } else {
+                        newDates.delete(formatted);
+                      }
+                      return Array.from(newDates);
+                    });
+                    setShowSymptomForm(false);
+                  }}
+                />
+              )}
+            </>
           )}
         </div>
 
         <div className="info-container">
-            {currentCycle ? (
-              renderCycle(currentCycle, 'Aktualny cykl', true)
-            ) : (
-              <p className="no-cycle">Brak aktualnego cyklu</p>
-            )}
-            {previousCycle && currentCycle && (
-              renderCycle(
-                previousCycle,
-                'Poprzedni cykl',
-                false,
-                previousCycle.cycleLength
-              )
-            )}
+          {currentCycle ? (
+            renderCycle(currentCycle, 'Aktualny cykl', true)
+          ) : (
+            <p className="no-cycle">Brak aktualnego cyklu</p>
+          )}
+
+          {previousCycle && currentCycle && (
+            renderCycle(previousCycle, 'Poprzedni cykl', false, previousCycle.cycleLength)
+          )}
         </div>
       </div>
     </div>

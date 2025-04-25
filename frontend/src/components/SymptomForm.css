@@ -1,0 +1,154 @@
+/* Overlay i modal */
+.symptom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.symptom-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 800px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Przycisk zamykania modala */
+.close-modal-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Nagłówki w formularzu */
+.symptom-modal h3 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.symptom-modal h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+}
+
+/* Sekcje formularza */
+.symptom-modal fieldset {
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 1.5rem;
+  background-color: #f8f3f8;
+}
+
+/* Grupy opcji (checkboxy nastroju i objawów) */
+.symptom-modal .option-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.symptom-modal input[type="checkbox"] {
+  display: none;
+}
+
+.symptom-modal label span {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease;
+}
+
+.symptom-modal input[type="checkbox"]:checked + span {
+  background-color: #e91e63;
+  color: white;
+  border-color: #e91e63;
+}
+
+/* Sekcje: poziom bólu brzucha i obfitość krwawienia */
+.pain-level-section,
+.bleeding-section {
+  margin-bottom: 1.5rem;
+}
+
+.pain-level-section input,
+.bleeding-section select {
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 200px;
+  box-sizing: border-box;
+  background-color: white;
+  transition: none !important;
+  transform: none !important;
+}
+
+/* Kontener przycisków na dole formularza */
+.submit-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Przycisk zapisu symptomów */
+.symptom-modal button[type="submit"] {
+  padding: 0.75rem 1.5rem;
+  background-color: #e91e63;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background-color 0.3s ease;
+}
+
+.symptom-modal button[type="submit"]:hover {
+  background-color: #c2185b;
+}
+
+/* Styl przycisku w stanie disabled */
+.symptom-modal button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Przycisk usuwania symptomów */
+.delete-symptom-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background-color 0.3s ease;
+}
+
+.delete-symptom-button:hover {
+  background-color: #c62828;
+}
+

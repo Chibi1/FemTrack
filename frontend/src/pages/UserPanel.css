@@ -93,9 +93,23 @@
 }
 
 .react-calendar__tile--active {
-  background: #4caf50 !important;
-  color: white !important;
+  background: transparent !important;
+  border: 2px solid #4caf50 !important; 
   border-radius: 50%;
+  box-sizing: border-box;
+  color: inherit !important; 
+}
+
+.period-day.react-calendar__tile--active {
+  background: #ff9999 !important; 
+  border: 2px solid #4caf50 !important; 
+  box-sizing: border-box;
+}
+
+.ovulation-confirmed.react-calendar__tile--active {
+  border: 2px solid #4caf50 !important; 
+  background-color: rgb(133, 180, 255) !important; 
+  box-sizing: border-box;
 }
 
 /* Nawigacja kalendarza (strzałki i miesiąc) */
@@ -237,4 +251,14 @@
 .ovulation-predicted {
   background-color: #d0e7ff !important;
   border-radius: 50%;
+}
+
+/* Informacja w kalendarzu o obecności symptomów w danym dniu */
+.symptom-indicator {
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  color: gold;
+  margin-top: 2px;
+  pointer-events: none;
 }
