@@ -106,7 +106,6 @@ router.get('/', authenticate, requireRole('user'), async (req, res) => {
 
     res.json(processedCycles);
   } catch (err) {
-    console.error('Błąd przy pobieraniu cykli:', err);
     res.status(500).json({ error: 'Błąd podczas pobierania cykli' });
   }
 });
@@ -149,17 +148,18 @@ router.put('/:id', authenticate, requireRole('user'), async (req, res) => {
 
     res.json({ message: 'Cykl zaktualizowany', cycle: updatedCycle });
   } catch (err) {
-    console.error('Błąd PUT /cycles/:id', err);
     res.status(500).json({ error: 'Błąd podczas edytowania cyklu' });
   }
 });
 
 /**
- * Usunięcie cyklu z bazy danych.
- * Możliwe tylko dla właścicielki cyklu.
+ * Usunięcie cyklu menstruacyjnego użytkowniczki.
+ * Jeśli usuwany cykl był wykorzystywany do potwierdzenia owulacji w poprzednim cyklu,
+ * owulacja zostaje cofnięta do przewidywanej (na podstawie średniej długości cyklu).
  */
 router.delete('/:id', authenticate, requireRole('user'), async (req, res) => {
   try {
+    // Usuwamy cykl tylko jeśli należy do zalogowanej użytkowniczki
     const deleted = await Cycle.findOneAndDelete({
       _id: req.params.id,
       userId: req.user.userId
@@ -169,13 +169,15 @@ router.delete('/:id', authenticate, requireRole('user'), async (req, res) => {
       return res.status(404).json({ error: 'Nie znaleziono cyklu' });
     }
 
-    // Aktualizacja owulacji w poprzednim cyklu, jeśli istniał
+    // Sprawdzamy, czy istnieje poprzedni cykl 
     const previousCycle = await Cycle.findOne({
       userId: req.user.userId,
       startDate: { $lt: deleted.startDate }
     }).sort({ startDate: -1 });
 
     if (previousCycle) {
+      // Usunięcie kolejnego cyklu uniemożliwia potwierdzenie owulacji w poprzednim cyklu,
+      // więc przywracamy owulację przewidywaną
       const predictedOvulation = new Date(previousCycle.startDate);
       predictedOvulation.setDate(
         predictedOvulation.getDate() + (previousCycle.averageLength - 14)
@@ -194,10 +196,10 @@ router.delete('/:id', authenticate, requireRole('user'), async (req, res) => {
 
     res.json({ message: 'Cykl usunięty pomyślnie' });
   } catch (err) {
-    console.error('Błąd podczas usuwania cyklu:', err);
     res.status(500).json({ error: 'Błąd podczas usuwania cyklu' });
   }
 });
+
 
 
 module.exports = router;

@@ -48,5 +48,4 @@ const cycleSchema = new mongoose.Schema({
   }
 });
 
-// Eksport modelu do użycia w aplikacji
 module.exports = mongoose.model('Cycle', cycleSchema);

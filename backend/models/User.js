@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Cycle = require('./Cycle');
+const Symptom = require('./Symptom');
 
 /**
  * Model użytkownika aplikacji.
@@ -33,14 +34,22 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+/**
+ * Usuwanie powiązanych danych (cykle i objawy) po usunięciu użytkownika.
+ */
 userSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
   try {
-    await Cycle.deleteMany({ userId: this._id });
+    const userId = this._id;
+
+    await Promise.all([
+      Cycle.deleteMany({ userId }),
+      Symptom.deleteMany({ userId })
+    ]);
+
     next();
   } catch (err) {
     next(err);
   }
 });
 
-// Eksport modelu do użycia przy rejestracji i logowaniu
 module.exports = mongoose.model('User', userSchema);

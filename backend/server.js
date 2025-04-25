@@ -11,7 +11,8 @@ const cors = require('cors');                 // Pozwala na połączenia z front
 
 // Import tras API i middleware'ów do uwierzytelniania i autoryzacji
 const authRoutes = require('./routes/auth');              
-const cycleRoutes = require('./routes/cycles');           
+const cycleRoutes = require('./routes/cycles');
+const symptomRoutes = require('./routes/symptoms');           
 const authenticate = require('./middleware/authenticate'); 
 const requireRole = require('./middleware/reqRole');  
 
@@ -40,6 +41,7 @@ mongoose.connect(process.env.MONGODB_URI)
     // Rejestracja tras API
     app.use('/api/auth', authRoutes);       // Rejestracja i logowanie
     app.use('/api/cycles', cycleRoutes);    // Operacje na cyklach menstruacyjnych
+    app.use('/api/symptoms', symptomRoutes); // Operacje na objawach
 
     // Prosty endpoint testowy
     app.get('/', (req, res) => {

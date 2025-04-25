@@ -22,7 +22,7 @@ function authenticate(req, res, next) {
     // Dodanie danych użytkownika do obiektu `req`
     req.user = decoded;
 
-    // Przekazanie dalej do kolejnego middleware (reqRole.js)
+    // Przekazanie dalej do kolejnego middleware'a (reqRole.js)
     next();
   } catch (err) {
     // Token nieprawidłowy lub wygasły

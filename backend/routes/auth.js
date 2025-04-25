@@ -76,6 +76,11 @@ router.post('/login', async (req, res) => {
   res.send({ token, role: user.role });
 });
 
+/**
+ * Usunięcie konta użytkowniczki wraz z jej danymi (cykle, objawy).
+ * DELETE /api/auth/delete-self
+ * Wymagana autoryzacja i rola "user".
+ */
 router.delete('/delete-self', authenticate, requireRole('user'), async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
@@ -83,6 +88,7 @@ router.delete('/delete-self', authenticate, requireRole('user'), async (req, res
       return res.status(404).json({ error: 'Nie znaleziono użytkowniczki' });
     }
 
+    // Usunięcie użytkowniczki i powiązanych danych (obsługiwane w pre('deleteOne') w modelu User)
     await user.deleteOne(); 
 
     res.json({ message: 'Użytkowniczka i jej dane zostały usunięte' });
