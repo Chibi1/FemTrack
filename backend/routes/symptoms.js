@@ -65,6 +65,7 @@ router.post('/:date', authenticate, requireRole('user'), async (req, res) => {
     abdominalPainLevel = null,
     bleedingIntensity = null,
     isPeriodDay = false,
+    notes = '',
   } = req.body;
 
   const parsedDate = parseDate(date);
@@ -84,6 +85,7 @@ router.post('/:date', authenticate, requireRole('user'), async (req, res) => {
       abdominalPainLevel,
       bleedingIntensity,
       isPeriodDay,
+      notes,
     };
 
     // Aktualizacja istniejącego wpisu

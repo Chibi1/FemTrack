@@ -32,6 +32,7 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
   const [symptoms, setSymptoms] = useState([]);
   const [abdominalPainLevel, setAbdominalPainLevel] = useState(0);
   const [bleedingIntensity, setBleedingIntensity] = useState('');
+  const [notes, setNotes] = useState('');
 
   /**
    * Inicjalizacja stanu formularza na podstawie istniejących danych symptomów.
@@ -42,6 +43,7 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
       setSymptoms(existingData.symptoms || []);
       setAbdominalPainLevel(existingData.abdominalPainLevel || 0);
       setBleedingIntensity(existingData.bleedingIntensity || '');
+      setNotes(existingData.notes || '');
     } else {
       setMood([]);
       setSymptoms([]);
@@ -110,6 +112,7 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
       mood,
       symptoms,
       isPeriodDay,
+      notes,
       ...(isPeriodDay && {
         abdominalPainLevel,
         bleedingIntensity
@@ -224,34 +227,47 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
   
             {/* Dodatkowe pola dla dni okresu */}
             {isPeriodDay && (
-            <>
-              <h4>Poziom bólu brzucha (0-7)</h4>
-              <div className="pain-level-section">
-                <input
-                  type="number"
-                  min="0"
-                  max="7"
-                  value={abdominalPainLevel}
-                  onChange={(e) => setAbdominalPainLevel(Number(e.target.value))}
-                />
-              </div>
+              <div className="pain-bleeding-wrapper">
+                <div className="pain-level-section">
+                  <label htmlFor="painLevel">Poziom bólu brzucha (0-7)</label>
+                  <input
+                    id="painLevel"
+                    type="number"
+                    min="0"
+                    max="7"
+                    value={abdominalPainLevel}
+                    onChange={(e) => setAbdominalPainLevel(Number(e.target.value))}
+                  />
+                </div>
 
-              <h4>Obfitość krwawienia</h4>
-              <div className="bleeding-section">
-                <select
-                  value={bleedingIntensity}
-                  onChange={(e) => setBleedingIntensity(e.target.value)}
-                >
-                  <option value="">Wybierz</option>
-                  {bleedingOptions.map(opt => (
-                    <option key={opt.value} value={opt.value}>
+                <div className="bleeding-section">
+                  <label htmlFor="bleedingAmount">Obfitość krwawienia</label>
+                  <select
+                    id="bleedingAmount"
+                    value={bleedingIntensity}
+                    onChange={(e) => setBleedingIntensity(e.target.value)}
+                  >
+                    <option value="">Wybierz</option>
+                    {bleedingOptions.map(opt => (
+                      <option key={opt.value} value={opt.value}>
                         {opt.label}
-                    </option>
-                  ))}
-                </select>
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-            </>
             )}
+
+            {/* Własne notatki */}
+            <div className="notes-section">
+              <label htmlFor="notes">Własne notatki</label>
+              <textarea
+                id="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Np. szczegóły bólu, nietypowe objawy..."
+              />
+            </div>
 
             {/* Przycisk zapisu i opcjonalnie przycisk usuwania */}
             <div className="submit-button-container">

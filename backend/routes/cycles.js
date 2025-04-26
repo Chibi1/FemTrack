@@ -20,7 +20,11 @@ router.post('/start', authenticate, requireRole('user'), async (req, res) => {
     const start = new Date(startDate);
 
     // Obliczenie długości poprzedniego cyklu (jeśli istnieje)
-    const lastCycle = await Cycle.findOne({ userId: req.user.userId }).sort({ startDate: -1 });
+    const lastCycle = await Cycle.findOne({
+      userId: req.user.userId,
+      startDate: { $lt: start }
+    }).sort({ startDate: -1 }); 
+    
 
     if (lastCycle) {
       const previousStart = new Date(lastCycle.startDate);
@@ -71,19 +75,25 @@ router.get('/', authenticate, requireRole('user'), async (req, res) => {
     const processedCycles = await Promise.all(
       cycles.map(async (cycle, index) => {
         let { ovulationDate, ovulationType } = cycle;
+        let calculatedCycleLength = null;
 
-        // Jeśli jest dostępny kolejny cykl – możemy potwierdzić owulację
+        // Oblicz długość całego cyklu (o ile istnieje następny cykl)
         if (index + 1 < cycles.length) {
           const nextStart = new Date(cycles[index + 1].startDate);
+          const currentStart = new Date(cycle.startDate);
+          const diffMs = nextStart - currentStart;
+          calculatedCycleLength = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // w dniach
+        }
 
-          // Owulacja przypada 14 dni przed rozpoczęciem kolejnego cyklu
+        // Potwierdzanie owulacji
+        if (index + 1 < cycles.length) {
+          const nextStart = new Date(cycles[index + 1].startDate);
           const confirmedOvulation = new Date(nextStart.getTime() - 14 * 24 * 60 * 60 * 1000);
 
           const isDifferent =
             ovulationType !== 'confirmed' ||
             new Date(ovulationDate).toDateString() !== confirmedOvulation.toDateString();
 
-          // Jeśli dane się różnią – aktualizujemy owulację w bazie
           if (isDifferent) {
             ovulationDate = confirmedOvulation;
             ovulationType = 'confirmed';
@@ -95,11 +105,11 @@ router.get('/', authenticate, requireRole('user'), async (req, res) => {
           }
         }
 
-        // Zwracamy cykl z aktualną datą owulacji
         return {
           ...cycle.toObject(),
           ovulationDate,
-          ovulationType
+          ovulationType,
+          cycleLength: cycle.cycleLength || calculatedCycleLength // użyj istniejącego albo wylicz
         };
       })
     );
@@ -109,6 +119,7 @@ router.get('/', authenticate, requireRole('user'), async (req, res) => {
     res.status(500).json({ error: 'Błąd podczas pobierania cykli' });
   }
 });
+
 
 /**
  * Edycja daty zakończenia okresu w konkretnym cyklu.

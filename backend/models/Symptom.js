@@ -40,7 +40,13 @@ const symptomSchema = new mongoose.Schema({
   bleedingIntensity: {
     type: String,
     enum: ['light', 'medium', 'heavy'],
-  }
+  },
+
+  // Własne notatki użytkowniczki (opcjonalne)
+  notes: {
+    type: String,
+    maxlength: 1000, 
+  },
 
 }, {
   timestamps: true
