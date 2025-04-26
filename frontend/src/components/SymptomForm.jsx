@@ -98,9 +98,11 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
     const sameSymptoms = isEqualArray(symptoms, existingData.symptoms || []);
     const samePain = abdominalPainLevel === (existingData.abdominalPainLevel ?? 0);
     const sameBleeding = bleedingIntensity === (existingData.bleedingIntensity ?? '');
+    const sameNotes = (existingData.notes || '') === notes;
   
-    return !(sameMood && sameSymptoms && samePain && sameBleeding);
+    return !(sameMood && sameSymptoms && samePain && sameBleeding && sameNotes);
   };
+  
   
   /**
    * Obsługa wysyłki formularza (zapis lub aktualizacja symptomów).
