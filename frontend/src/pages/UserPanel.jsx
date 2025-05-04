@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './UserPanel.css';
@@ -27,6 +28,8 @@ const formatDateOnly = (date) => {
 };
 
 function UserPanel() {
+  const navigate = useNavigate();
+
   // Dane użytkowniczki
   const [userName, setUserName] = useState('');
 
@@ -57,7 +60,6 @@ function UserPanel() {
   const [showSymptomForm, setShowSymptomForm] = useState(false);
   const [symptomData, setSymptomData] = useState(null);
   
-
   // Pierwsze załadowanie: walidacja tokenu i pobranie danych użytkowniczki
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -257,32 +259,6 @@ function UserPanel() {
     }
   };
   
-  // Usuwanie konta użytkowniczki
-  const handleDeleteAccount = async () => {
-    const confirmed = window.confirm("Czy na pewno chcesz usunąć swoje konto? Tego nie da się cofnąć.");
-    if (!confirmed) return;
-  
-    const token = localStorage.getItem('token');
-  
-    try {
-      const res = await fetch('/api/auth/delete-self', {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-  
-      if (res.ok) {
-        localStorage.clear();
-        window.location.href = '/';
-      } else {
-        alert("Nie udało się usunąć konta.");
-      }
-    } catch {
-      alert("Wystąpił błąd po stronie serwera.");
-    }
-  };
-  
   // Render pojedynczego cyklu z danymi i edycją, jeśli jest to aktualny cykl
   const renderCycle = (cycle, title, isCurrent = false, extraInfo = null) => {
     if (!cycle) return null;
@@ -316,7 +292,19 @@ function UserPanel() {
       {/* Górny pasek z imieniem i przyciskami */}
       <div className="header">
         <h2>Witaj, {userName}!</h2>
-        <div className="user-actions">
+          <div className="user-actions">
+          <button
+            className="profile-button"
+            onClick={() => {
+              if (editingMode) {
+                alert('Najpierw zakończ edycję okresu.');
+                return;
+              }
+              navigate('/panel-uzytkowniczki/profil');
+            }}
+          >
+            Mój profil
+          </button>
           <button
             className="logout-button"
             onClick={() => {
@@ -326,12 +314,6 @@ function UserPanel() {
             }}
           >
             Wyloguj się
-          </button>
-          <button
-            className="delete-account-button"
-            onClick={handleDeleteAccount}
-          >
-            Usuń konto
           </button>
         </div>
       </div>

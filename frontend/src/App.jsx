@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import AuthPage from './pages/AuthPage';
 import UserPanel from './pages/UserPanel';
 import DoctorPanel from './pages/DoctorPanel';
+import UserProfile from './pages/UserProfile';
 import './App.css';
 
 function App() {
@@ -64,6 +65,17 @@ function App() {
               : <Navigate to="/" replace />
           }
         />
+
+        {/* Profil użytkowniczki */}
+        <Route
+          path="/panel-uzytkowniczki/profil"
+          element={
+            isLoggedIn && role === 'user'
+              ? <UserProfile />
+              : <Navigate to="/" replace />
+          }
+        />
+
       </Routes>
     </div>
   );
