@@ -2,6 +2,7 @@ const express = require('express');
 const authenticate = require('../middleware/authenticate');
 const requireRole = require('../middleware/reqRole');
 const Cycle = require('../models/Cycle');       // Model cyklu
+const User = require('../models/User');         // Model użytkowniczki
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ const router = express.Router();
  * Obliczamy datę zakończenia okresu i przewidywaną datę owulacji.
  */
 router.post('/start', authenticate, requireRole('user'), async (req, res) => {
-  const { startDate, averageLength=28, periodLength=5 } = req.body;
+  const { startDate } = req.body;
 
   if (!startDate) {
     return res.status(400).json({ error: 'Brak daty rozpoczęcia okresu' });
@@ -19,19 +20,27 @@ router.post('/start', authenticate, requireRole('user'), async (req, res) => {
   try {
     const start = new Date(startDate);
 
-    // Obliczenie długości poprzedniego cyklu (jeśli istnieje)
+    // Pobierz dane profilu użytkowniczki
+    const user = await User.findById(req.user.userId);
+
+    // Średnia długość cyklu i krwawienia (z profilu lub domyślna)
+    const averageLength = user?.cycleLength || 28; 
+    const periodLength = user?.periodLength || 5; 
+
+    // Wyszukaj ostatni cykl przed nowym startem (jeśli istnieje)
     const lastCycle = await Cycle.findOne({
       userId: req.user.userId,
-      startDate: { $lt: start }
-    }).sort({ startDate: -1 }); 
+      startDate: { $lt: start } // tylko wcześniejsze cykle
+    }).sort({ startDate: -1 }); // weź najnowszy z wcześniejszych 
     
-
+    // Oblicz długość cyklu na podstawie różnicy między nowym a ostatnim cyklem
     if (lastCycle) {
       const previousStart = new Date(lastCycle.startDate);
       const currentStart = new Date(start);
       const diffMs = currentStart.getTime() - previousStart.getTime();
       const length = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
+      // Zaktualizuj długość poprzedniego cyklu
       await Cycle.updateOne(
         { _id: lastCycle._id },
         { $set: { cycleLength: length } }
@@ -42,12 +51,13 @@ router.post('/start', authenticate, requireRole('user'), async (req, res) => {
     const end = new Date(start);
     end.setDate(end.getDate() + periodLength - 1);
 
-    // Przewidywana owulacja: 14 dni przed końcem średniego (28-dniowego) cyklu
+    // Przewidywana owulacja: 14 dni przed końcem średniej długości cyklu
     const ovulation = new Date(start);
     ovulation.setDate(start.getDate() + (averageLength - 14));
 
+    // Utwórz nowy cykl
     const newCycle = new Cycle({
-      userId: req.user.userId,           // Identyfikator zalogowanej użytkowniczki
+      userId: req.user.userId,           
       startDate: start,
       endDate: end,
       averageLength,

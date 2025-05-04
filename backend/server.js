@@ -12,9 +12,11 @@ const cors = require('cors');                 // Pozwala na połączenia z front
 // Import tras API i middleware'ów do uwierzytelniania i autoryzacji
 const authRoutes = require('./routes/auth');              
 const cycleRoutes = require('./routes/cycles');
-const symptomRoutes = require('./routes/symptoms');           
+const symptomRoutes = require('./routes/symptoms');
+const profileRoutes = require('./routes/profile');           
 const authenticate = require('./middleware/authenticate'); 
 const requireRole = require('./middleware/reqRole');  
+const path = require('path');
 
 // Model użytkownika – używany do pobierania imienia do panelu
 const User = require('./models/User');
@@ -42,6 +44,10 @@ mongoose.connect(process.env.MONGODB_URI)
     app.use('/api/auth', authRoutes);       // Rejestracja i logowanie
     app.use('/api/cycles', cycleRoutes);    // Operacje na cyklach menstruacyjnych
     app.use('/api/symptoms', symptomRoutes); // Operacje na objawach
+    app.use('/api/profile', profileRoutes);  // Obsługa tras związanych z profilem użytkowniczki
+    
+     // Udostępnianie folderu 'uploads' jako statycznego katalogu (dla zdjęć profilowych)
+    app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 
     // Prosty endpoint testowy
     app.get('/', (req, res) => {

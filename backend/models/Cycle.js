@@ -23,7 +23,7 @@ const cycleSchema = new mongoose.Schema({
   // Średnia długość cyklu
   averageLength: {
     type: Number,
-    default: 28
+    required: true
   },
   // Długość danego cyklu
   cycleLength: {
@@ -33,7 +33,7 @@ const cycleSchema = new mongoose.Schema({
   // Liczba dni krwawienia
   periodLength: {
     type: Number,
-    default: 5
+    required: true
   },
   // Data owulacji (przewidywana lub potwierdzona)
   ovulationDate: {

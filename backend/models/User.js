@@ -31,7 +31,22 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['user', 'doctor'],
     default: 'user'
-  }
+  },
+
+  // DANE PROFILU (opcjonalne, uzupełniane przez użytkowniczkę):
+  birthdate: Date,
+  height: Number, 
+  weight: Number, 
+  cycleLength: Number,
+  periodLength: Number,
+  hormonalContraception: Boolean,
+  contraceptionType: String,
+  takesMeds: Boolean,
+  meds: String,
+  hasChronicIllness: Boolean,
+  chronicIllness: String,
+  lastGynecologistVisit: Date,
+  profileImage: String 
 });
 
 /**
