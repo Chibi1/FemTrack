@@ -2,6 +2,7 @@ const express = require('express');
 const authenticate = require('../middleware/authenticate');
 const requireRole = require('../middleware/reqRole');
 const Symptom = require('../models/Symptom');
+const { generateAlerts } = require('../utils/alertRules'); 
 
 const router = express.Router();
 
@@ -91,14 +92,17 @@ router.post('/:date', authenticate, requireRole('user'), async (req, res) => {
     // Aktualizacja istniejącego wpisu
     if (existing) {
       await Symptom.updateOne({ _id: existing._id }, { $set: data });
-      return res.json({ message: 'Symptomy zaktualizowane' });
+      const alerts = await generateAlerts(req.user.userId);
+      return res.json({ message: 'Symptomy zaktualizowane', alerts });      
     }
 
     // Utworzenie nowego wpisu
     const newSymptom = new Symptom(data);
     await newSymptom.save();
-    res.status(201).json({ message: 'Symptomy zapisane' });
+    const alerts = await generateAlerts(req.user.userId);
+    res.status(201).json({ message: 'Symptomy zapisane', alerts });    
   } catch (err) {
+    console.error('Błąd zapisu symptomów:', err);
     res.status(500).json({ error: 'Uzupełnij w formularzu obfitość krwawienia' });
   }
 });
@@ -129,7 +133,8 @@ router.put('/:date', authenticate, requireRole('user'), async (req, res) => {
       return res.status(404).json({ error: 'Nie znaleziono wpisu do aktualizacji' });
     }
 
-    res.json(updated);
+    const alerts = await generateAlerts(req.user.userId);
+    res.json({ symptom: updated, alerts });    
   } catch (err) {
     res.status(500).json({ error: 'Błąd serwera' });
   }
@@ -177,7 +182,8 @@ router.delete('/:date', authenticate, requireRole('user'), async (req, res) => {
       return res.status(404).json({ message: 'Brak zapisanych symptomów na ten dzień' });
     }
 
-    res.json({ message: 'Symptomy usunięte' });
+    const alerts = await generateAlerts(req.user.userId);
+    res.json({ message: 'Symptomy usunięte', alerts });
   } catch (err) {
     res.status(500).json({ error: 'Błąd serwera przy usuwaniu danych' });
   }

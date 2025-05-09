@@ -13,7 +13,8 @@ const cors = require('cors');                 // Pozwala na połączenia z front
 const authRoutes = require('./routes/auth');              
 const cycleRoutes = require('./routes/cycles');
 const symptomRoutes = require('./routes/symptoms');
-const profileRoutes = require('./routes/profile');           
+const profileRoutes = require('./routes/profile');
+const alertsRouter = require('./routes/alerts');           
 const authenticate = require('./middleware/authenticate'); 
 const requireRole = require('./middleware/reqRole');  
 const path = require('path');
@@ -45,6 +46,7 @@ mongoose.connect(process.env.MONGODB_URI)
     app.use('/api/cycles', cycleRoutes);    // Operacje na cyklach menstruacyjnych
     app.use('/api/symptoms', symptomRoutes); // Operacje na objawach
     app.use('/api/profile', profileRoutes);  // Obsługa tras związanych z profilem użytkowniczki
+    app.use('/api/alerts', authenticate, alertsRouter); // Generowanie alertów zdrowotnych
     
      // Udostępnianie folderu 'uploads' jako statycznego katalogu (dla zdjęć profilowych)
     app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 

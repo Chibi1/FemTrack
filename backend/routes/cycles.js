@@ -1,8 +1,10 @@
 const express = require('express');
 const authenticate = require('../middleware/authenticate');
 const requireRole = require('../middleware/reqRole');
-const Cycle = require('../models/Cycle');       // Model cyklu
-const User = require('../models/User');         // Model użytkowniczki
+const Cycle = require('../models/Cycle');       
+const User = require('../models/User');         
+const Symptom = require('../models/Symptom');
+const { generateAlerts } = require('../utils/alertRules'); // Funkcja generująca alerty zdrowotne
 
 const router = express.Router();
 
@@ -67,7 +69,8 @@ router.post('/start', authenticate, requireRole('user'), async (req, res) => {
     });
 
     await newCycle.save();
-    res.status(201).json({ message: 'Cykl zapisany', cycle: newCycle });
+    const alerts = await generateAlerts(req.user.userId);
+    res.status(201).json({ message: 'Cykl zapisany', cycle: newCycle, alerts });    
   } catch (err) {
     res.status(500).json({ error: 'Błąd zapisu cyklu' });
   }
@@ -156,6 +159,37 @@ router.put('/:id', authenticate, requireRole('user'), async (req, res) => {
     const diffMs = normalizedEnd.getTime() - currentCycle.startDate.getTime();
     const days = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
 
+    const oldEnd = new Date(currentCycle.endDate);
+    const oldPeriodDates = [];
+    const old = new Date(currentCycle.startDate);
+    while (old <= oldEnd) {
+      oldPeriodDates.push(old.toISOString().split('T')[0]);
+      old.setDate(old.getDate() + 1);
+    }
+
+    const newPeriodDates = [];
+    const now = new Date(currentCycle.startDate);
+    while (now <= normalizedEnd) {
+      newPeriodDates.push(now.toISOString().split('T')[0]);
+      now.setDate(now.getDate() + 1);
+    }
+
+    const removedDates = oldPeriodDates.filter(d => !newPeriodDates.includes(d));
+
+    await Promise.all(removedDates.map(async (dateString) => {
+      const date = new Date(dateString);
+      await Symptom.updateOne(
+        { userId: req.user.userId, date },
+        {
+          $set: {
+            isPeriodDay: false,
+            bleedingIntensity: null,
+            abdominalPainLevel: null
+          }
+        }
+      );
+    }));
+
     const update = {
       endDate: normalizedEnd,
       periodLength: days
@@ -167,7 +201,8 @@ router.put('/:id', authenticate, requireRole('user'), async (req, res) => {
       { new: true }
     );
 
-    res.json({ message: 'Cykl zaktualizowany', cycle: updatedCycle });
+    const alerts = await generateAlerts(req.user.userId);
+    res.json({ message: 'Cykl zaktualizowany', cycle: updatedCycle, alerts });    
   } catch (err) {
     res.status(500).json({ error: 'Błąd podczas edytowania cyklu' });
   }
@@ -189,6 +224,30 @@ router.delete('/:id', authenticate, requireRole('user'), async (req, res) => {
     if (!deleted) {
       return res.status(404).json({ error: 'Nie znaleziono cyklu' });
     }
+
+    // Usuwanie danych okresowych z symptomów przypisanych do usuwanego okresu
+    const start = new Date(deleted.startDate);
+    const end = new Date(deleted.endDate);
+
+    const datesToClear = [];
+    const current = new Date(start);
+    while (current <= end) {
+      datesToClear.push(new Date(current));
+      current.setDate(current.getDate() + 1);
+    }
+
+    await Promise.all(datesToClear.map(async (date) => {
+      await Symptom.updateOne(
+        { userId: req.user.userId, date },
+        {
+          $set: {
+            isPeriodDay: false,
+            bleedingIntensity: null,
+            abdominalPainLevel: null
+          }
+        }
+      );
+    }));
 
     // Sprawdzamy, czy istnieje poprzedni cykl 
     const previousCycle = await Cycle.findOne({
@@ -215,7 +274,8 @@ router.delete('/:id', authenticate, requireRole('user'), async (req, res) => {
       );
     }
 
-    res.json({ message: 'Cykl usunięty pomyślnie' });
+    const alerts = await generateAlerts(req.user.userId);
+    res.json({ message: 'Cykl usunięty pomyślnie', alerts });
   } catch (err) {
     res.status(500).json({ error: 'Błąd podczas usuwania cyklu' });
   }

@@ -3,7 +3,7 @@
   padding: 2rem 4rem;
 }
 
-/* Górny pasek z nagłówkiem i przyciskami */
+/* Górny pasek z nagłówkiem, sekcją alertów i przyciskami */
 .header {
   display: flex;
   justify-content: space-between;
@@ -18,12 +18,37 @@
   margin-bottom: 20px;
 }
 
-/* Przyciski w nagłówku */
+.alert-notice {
+  display: flex;
+  align-items: center;
+  background-color: #fff0f0;
+  border: 1px solid #ffc2c2;
+  border-radius: 12px;
+  padding: 0.75rem 1.2rem;   
+  font-size: 1.05rem;   
+  font-weight: 500;
+  gap: 0.8rem;
+}
+
+.alert-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.alert-button:hover {
+  background-color: #e63946;
+}
+
 .user-actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   gap: 0.6rem;
+  gap: 1rem;
 }
 
 .user-actions button {
@@ -263,4 +288,54 @@
   color: gold;
   margin-top: 2px;
   pointer-events: none;
+}
+
+/* Styl dla modalu z alertami */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: white;
+  padding: 1.5rem 2rem 2.5rem; 
+  border-radius: 20px;
+  width: 95%;
+  max-width: 540px;
+  position: relative;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.modal-content h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.modal-content ul {
+  padding-left: 1.2rem;
+  margin-top: 0;
+}
+
+.modal-content ul li {
+  margin-bottom: 1rem;
+  padding-left: 0.3rem;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }

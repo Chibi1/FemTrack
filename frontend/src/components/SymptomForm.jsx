@@ -143,7 +143,7 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
       const data = await res.json();
       console.log('Symptomy zapisane:', data);
   
-      onSubmit(data); // Aktualizacja danych w panelu użytkowniczki
+      onSubmit(data.symptom || data, data.alerts);    // Przekazuje zapisane objawy i alerty do UserPanel
       onClose();      // Zamknięcie formularza
     } catch (err) {
       alert(err.message);
@@ -165,14 +165,15 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
           Authorization: `Bearer ${token}`
         }
       });
-  
+      
+      const data = await res.json();
+      
       if (!res.ok) {
-        const data = await res.json();
         throw new Error(data.error || 'Nie udało się usunąć objawów.');
       }
-  
-      onSubmit(null); // Informacja dla UserPanel, że objawy zostały usunięte 
-      onClose();
+      
+      onSubmit(null, data.alerts);
+      onClose();      
     } catch (err) {
       console.error("Błąd przy usuwaniu symptomów:", err);
       alert("Wystąpił błąd przy usuwaniu objawów.");

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { generateAlerts } = require('../utils/alertRules');  // Funkcja generująca alerty zdrowotne
 
 // GET /api/profile – pobiera dane profilu użytkowniczki (bez hasła i __v)
 const getProfile = async (req, res) => {
@@ -97,12 +98,12 @@ const updateProfile = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       updates.password = await bcrypt.hash(req.body.password, salt);
     }
-    
-
     // Zaktualizuj dane użytkowniczki i zwróć nowy obiekt
     const user = await User.findByIdAndUpdate(req.user.userId, updates, { new: true }).select('-password -__v');
     if (!user) return res.status(404).json({ message: 'Nie znaleziono użytkowniczki' });
-    res.json(user);
+
+    const alerts = await generateAlerts(req.user.userId);
+    res.json({ user, alerts });
   } catch (err) {
     res.status(500).json({ message: 'Błąd podczas aktualizacji profilu' });
   }

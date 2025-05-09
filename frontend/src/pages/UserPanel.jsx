@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './UserPanel.css';
@@ -29,6 +30,7 @@ const formatDateOnly = (date) => {
 
 function UserPanel() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Dane użytkowniczki
   const [userName, setUserName] = useState('');
@@ -59,6 +61,18 @@ function UserPanel() {
   // Dane formularza objawów
   const [showSymptomForm, setShowSymptomForm] = useState(false);
   const [symptomData, setSymptomData] = useState(null);
+
+  // Lista aktualnych alertów zdrowotnych dla użytkowniczki
+  const [alerts, setAlerts] = useState([]);
+
+  const [showAlertsModal, setShowAlertsModal] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.refreshAlerts) {
+      fetchAlerts(); // pobiera nowe alerty z backendu
+      navigate('.', { replace: true }); // usuwa state, żeby nie ponawiać przy każdej zmianie trasy
+    }
+  }, [location, navigate]);
   
   // Pierwsze załadowanie: walidacja tokenu i pobranie danych użytkowniczki
   useEffect(() => {
@@ -84,7 +98,26 @@ function UserPanel() {
 
     loadCycles();
     loadSymptomDates();
+    fetchAlerts();
   }, []);
+
+  // Pobiera aktualne alerty zdrowotne użytkowniczki z backendu
+  const fetchAlerts = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch('/api/alerts', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setAlerts(data);
+      } else {
+        console.error('Nie udało się pobrać alertów');
+      }
+    } catch (err) {
+      console.error('Błąd sieci przy pobieraniu alertów:', err);
+    }
+  };
 
   // Pobranie cykli z backendu i przygotowanie danych do kalendarza
   const loadCycles = async () => {
@@ -151,8 +184,10 @@ function UserPanel() {
       if (!response.ok) {
         return;
       }
-
-      await loadCycles();
+      if (data.alerts) {
+        setAlerts(data.alerts);
+      }
+      await loadCycles();      
     } catch {
       alert('Wystąpił błąd podczas zapisu');
     }
@@ -162,31 +197,35 @@ function UserPanel() {
   const handleEditLength = async (delta) => {
     if (!currentCycle) return;
     const token = localStorage.getItem('token');
-
+  
     const newEnd = new Date(currentCycle.endDate);
     newEnd.setDate(newEnd.getDate() + delta);
-
+  
     const days = getPeriodDates(currentCycle.startDate, newEnd).length;
-
+  
     if (days < 1) {
       const confirmed = window.confirm('Czy chcesz usunąć ten cykl?');
       if (confirmed) {
         try {
-          await fetch(`/api/cycles/${currentCycle._id}`, {
+          const res = await fetch(`/api/cycles/${currentCycle._id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` },
           });
+          const data = await res.json();
           setEditingMode(false);
           await loadCycles();
+          if (data.alerts) {
+            setAlerts(data.alerts); 
+          }
         } catch {
           alert('Wystąpił błąd przy usuwaniu cyklu.');
         }
       }
       return;
     }
-
+  
     try {
-      await fetch(`/api/cycles/${currentCycle._id}`, {
+      const res = await fetch(`/api/cycles/${currentCycle._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -194,12 +233,18 @@ function UserPanel() {
         },
         body: JSON.stringify({ endDate: formatDateOnly(newEnd) }),
       });
+  
+      const data = await res.json();
       await loadCycles();
+  
+      if (data.alerts) {
+        setAlerts(data.alerts); 
+      }
     } catch {
       alert('Błąd podczas edycji długości cyklu.');
     }
   };
-
+  
   // Obsługa kliknięcia w dzień kalendarza
   const handleDayClick = async (date) => {
     if (editingMode) return alert('Najpierw zakończ edycję okresu.');
@@ -292,7 +337,24 @@ function UserPanel() {
       {/* Górny pasek z imieniem i przyciskami */}
       <div className="header">
         <h2>Witaj, {userName}!</h2>
-          <div className="user-actions">
+          {alerts.length > 0 && (
+            <div className="alert-notice">
+              <span>Nowe alerty zdrowotne!</span>
+              <button 
+              onClick={() => {
+                if (editingMode) {
+                  alert('Najpierw zakończ edycję okresu.');
+                  return;
+                }
+                setShowAlertsModal(true);
+              }}
+              className="alert-button"
+              >
+                Poznaj szczegóły
+              </button>
+            </div>
+          )}
+        <div className="user-actions">
           <button
             className="profile-button"
             onClick={() => {
@@ -374,7 +436,7 @@ function UserPanel() {
                   isPeriodDay={isPeriodDay}
                   existingData={symptomData}
                   onClose={() => setShowSymptomForm(false)}
-                  onSubmit={(data) => {
+                  onSubmit={(data, alertsFromServer) => {
                     const formatted = selectedDay.toDateString();
                     setSymptomDates((prev) => {
                       const newDates = new Set(prev);
@@ -385,6 +447,9 @@ function UserPanel() {
                       }
                       return Array.from(newDates);
                     });
+                    if (alertsFromServer) {
+                      setAlerts(alertsFromServer);
+                    }
                     setShowSymptomForm(false);
                   }}
                 />
@@ -392,7 +457,7 @@ function UserPanel() {
             </>
           )}
         </div>
-
+        {/* Sekcja informacyjna po prawej stronie kalendarza z aktualnym i poprzednim cyklem */}
         <div className="info-container">
           {currentCycle ? (
             renderCycle(currentCycle, 'Aktualny cykl', true)
@@ -405,6 +470,22 @@ function UserPanel() {
           )}
         </div>
       </div>
+      {showAlertsModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button className="close-modal" onClick={() => setShowAlertsModal(false)}>×</button>
+            <h3>🔔 Twoje alerty zdrowotne</h3>
+            <ul>
+              {alerts.map((alert, index) => (
+                <li key={index}>
+                  {typeof alert === 'string' ? alert : alert.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

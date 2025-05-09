@@ -232,7 +232,7 @@ const UserProfile = () => {
       if (res.ok) {
         const data = await res.json();
         if (window.confirm('Dane zostały zapisane! Czy chcesz wrócić do kalendarza?')) {
-          navigate('/panel-uzytkowniczki');
+          navigate('/panel-uzytkowniczki', { state: { refreshAlerts: true } });
         }
 
         // Po zapisie resetujemy pola hasła i cofamy edycję imienia/emaila
