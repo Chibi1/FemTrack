@@ -62,7 +62,7 @@ Projekt znajduje się w **aktywnym rozwoju**. Aktualnie wdrożone są główne f
 
 ---
 
-## 👥 Zespół
+## Zespół
 
 Projekt grupowy realizowany w ramach przedmiotu:  
 **"Rozwój aplikacji internetowych w medycynie"**  
