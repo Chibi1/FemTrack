@@ -82,8 +82,8 @@ FemTrack oferuje:
 
 Projekt składa się z dwóch głównych części:
 
-- [Frontend (React)](frontend/README.md)
-- [Backend (Node.js + Express)](backend/README.md)
+- [Frontend (React)](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/frontend/README.md)
+- [Backend (Node.js + Express)]([backend/README.md](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/backend/README.md))
 
 Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych plikach.
 
