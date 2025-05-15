@@ -1,51 +1,72 @@
 # FemTrack
-To aplikacja webowa wspierająca zdrowie hormonalne kobiet. Łączy funkcję śledzenia cyklu menstruacyjnego z możliwością bezpośredniego kontaktu z prawdziwym lekarzem.
 
-# O projekcie
-W przeciwieństwie do tradycyjnych aplikacji menstruacyjnych, FemTrack będzie oferował:
-- intuicyjny kalendarz cyklu,
-- możliwość notowania objawów, nastroju i dolegliwości,
-- dostęp do listy zweryfikowanych lekarzy,
-- czat na żywo z lekarzem
-- archiwum rozmów oraz historia konsultacji,
-- szybki wywiad lekarski przez predefiniowany formularz.
+**FemTrack** to aplikacja webowa zaprojektowana z myślą o kobietach, umożliwiająca śledzenie cyklu menstruacyjnego oraz szybki kontakt z lekarzem w celu konsultacji. Aplikacja łączy funkcjonalność intuicyjnego kalendarza cyklu z możliwością prowadzenia rozmów w czasie rzeczywistym.
 
-# Funkcjonalności
-👩 Konto użytkowniczki:
+---
+
+## O projekcie
+
+FemTrack oferuje:
+
+- Intuicyjny kalendarz cyklu z zaznaczeniem dni okresu i owulacji
+- Możliwość notowania objawów, nastroju i dolegliwości (różne formularze dla dni okresowych i nieokresowych)
+- Personalizowane alerty zdrowotne na podstawie wprowadzonych danych
+- Profil użytkowniczki z możliwością edycji danych i zdjęcia
+- Dostęp do listy zweryfikowanych lekarzy
+- Czat na żywo z lekarzem
+- Archiwum rozmów i historia konsultacji
+- Formularz wywiadu zdrowotnego w czasie czatu
+
+---
+
+## Funkcjonalności
+
+### 👩 Konto użytkowniczki:
 - Rejestracja i logowanie
-- Wprowadzanie danych o cyklu, objawach, samopoczuciu
-- Personalizowane porady na podstawie wprowadzonych danych
-- Lista dostępnych lekarzy i możliwość czatu
-- Historia rozmów i edycja profilu
+- Dodawanie cykli menstruacyjnych z automatycznym wyliczaniem długości i owulacji
+- Notowanie objawów z rozróżnieniem na dni okresowe i nieokresowe
+- Edytowalny formularz symptomów i kalendarz z graficznymi oznaczeniami
+- System alertów zdrowotnych (nieregularność, opóźnienia, silne objawy)
+- Profil z edytowalnymi danymi (imię, e-mail, dane zdrowotne, hasło, zdjęcie profilowe)
+- Przechowywanie historii cykli, objawów i konsultacji
 
-🩺 Konto lekarza:
-- Status „dostępny” po zalogowaniu
-- Odbieranie wiadomości i prowadzenie czatu
-- Wgląd w historię konsultacji z użytkowniczkami
-- Możliwość przesłania formularza wywiadu
+### 🩺 Konto lekarza:
+- Logowanie z użyciem ID i hasła
+- Widok dostępnych pacjentek oraz historii ich cykli i objawów
+- Status "dostępny" i możliwość prowadzenia czatu
+- Przesyłanie formularza wywiadu do pacjentki podczas konsultacji
 
-# Planowane technologie
-🖼️ Frontend
-- React.js – budowa dynamicznego i modularnego interfejsu użytkownika
-- Next.js (opcjonalnie) – optymalizacja SEO i SSR
-- Tailwind CSS – szybkie i nowoczesne stylowanie
-- Recharts – wizualizacja danych cyklu (np. wykresy objawów)
-- React Calendar – obsługa kalendarza menstruacyjnego
+---
 
-🔧 Backend
-- Node.js + Express.js – serwer API i logika biznesowa
-- MongoDB (Mongoose) – baza NoSQL do przechowywania danych użytkowniczek i historii czatu
-- JWT + bcrypt.js – bezpieczna autoryzacja i przechowywanie haseł
+## Technologie
 
-💬 Czat na żywo (real-time messaging)
-- Socket.io – komunikacja w czasie rzeczywistym
-- Firebase Firestore (alternatywa, jeśli chcemy ograniczyć backend)
+### Frontend:
+- **React.js** – modularna architektura i dynamiczny UI
+- **CSS** – stylowanie interfejsu użytkownika
 
-# Status projektu 
-Projekt znajduje się w fazie wstępnego rozwoju.
+### Backend:
+- **Node.js + Express.js** – API REST i logika aplikacji
+- **MongoDB + Mongoose** – przechowywanie danych użytkowniczek, cykli, symptomów, lekarzy
+- **JWT + bcrypt.js** – autoryzacja i bezpieczne logowanie
+- **Multer** – obsługa przesyłania zdjęć profilowych
 
-# Zespół
-Projekt grupowy realizowany w ramach przedmiotu "Rozwój aplikacji internetowych w medycynie" 
+### Real-time messaging:
+- **Socket.io** – czat na żywo pomiędzy użytkowniczką a lekarzem
+- **Firebase Firestore** (alternatywnie) – jako fallback dla komunikacji
 
-Politechnika Gdańska, 2025
+---
 
+## Status projektu
+
+Projekt znajduje się w **aktywnym rozwoju**. Aktualnie wdrożone są główne funkcje cyklu, objawów i profilu.
+
+---
+
+## 👥 Zespół
+
+Projekt grupowy realizowany w ramach przedmiotu:  
+**"Rozwój aplikacji internetowych w medycynie"**  
+Opiekun: *dr inż. Anna Węsierska*  
+**Politechnika Gdańska, 2025**
+
+---
