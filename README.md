@@ -1,7 +1,7 @@
 ![Politechnika Gdańska](https://pg.edu.pl/files/wimio/styles/large/public/2021-04/logo-pg-eti.png?itok=kGzz7S79)
 
 ## Politechnika Gdańska
-Wydział Elektroniki, Telekomunikacji i Informatyki  
+## Wydział Elektroniki, Telekomunikacji i Informatyki  
 **Kierunek:** Inżynieria Biomedyczna, specjalność: Informatyka w Medycynie  
 **Przedmiot:** Rozwój Aplikacji Internetowych w Medycynie  
 **Rok akademicki:** 2024/2025  
