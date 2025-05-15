@@ -1,6 +1,7 @@
 ![Politechnika Gdańska](https://pg.edu.pl/files/wimio/styles/large/public/2021-04/logo-pg-eti.png?itok=kGzz7S79)
 
-## Politechnika Gdańska, Wydział Elektroniki, Telekomunikacji i Informatyki  
+## Politechnika Gdańska
+Wydział Elektroniki, Telekomunikacji i Informatyki  
 **Kierunek:** Inżynieria Biomedyczna, specjalność: Informatyka w Medycynie  
 **Przedmiot:** Rozwój Aplikacji Internetowych w Medycynie  
 **Rok akademicki:** 2024/2025  
@@ -83,7 +84,7 @@ FemTrack oferuje:
 Projekt składa się z dwóch głównych części:
 
 - [Frontend (React)](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/frontend/README.md)
-- [Backend (Node.js + Express)]([backend/README.md](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/backend/README.md))
+- [Backend (Node.js + Express)](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/backend/README.md)
 
 Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych plikach.
 
