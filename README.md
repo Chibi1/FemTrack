@@ -1,7 +1,6 @@
 ![Politechnika Gdańska](https://pg.edu.pl/files/wimio/styles/large/public/2021-04/logo-pg-eti.png?itok=kGzz7S79)
 
-## Politechnika Gdańska
-## Wydział Elektroniki, Telekomunikacji i Informatyki  
+## Politechnika Gdańska, Wydział Elektroniki, Telekomunikacji i Informatyki  
 **Kierunek:** Inżynieria Biomedyczna, specjalność: Informatyka w Medycynie  
 **Przedmiot:** Rozwój Aplikacji Internetowych w Medycynie  
 **Rok akademicki:** 2024/2025  
@@ -23,7 +22,7 @@ FemTrack oferuje:
 - Profil użytkowniczki z możliwością edycji danych i zdjęcia
 - Dostęp do listy zweryfikowanych lekarzy
 - Czat na żywo z lekarzem
-- Archiwum rozmów i historia konsultacji
+- Historia rozmów z lekarzami
 - Formularz wywiadu zdrowotnego w czasie czatu
 
 ---
@@ -31,9 +30,7 @@ FemTrack oferuje:
 ## Cele i założenia projektu
 
 - Ułatwienie codziennego monitorowania zdrowia i samopoczucia poprzez prowadzenie kalendarza cyklu oraz notowanie objawów fizycznych i emocjonalnych
-- Wsparcie kobiet w lepszym zrozumieniu swojego cyklu menstruacyjnego i zmian hormonalnych zachodzących w organizmie
 - Możliwość szybkiej i wygodnej konsultacji z lekarzem – zwłaszcza w sytuacjach niepokoju, takich jak opóźniony okres, silne objawy czy nietypowe zmiany
-- Skupienie na aspektach zdrowia ginekologicznego i hormonalnego, dzięki czemu użytkowniczki mogą uzyskać pomoc w zaufanym środowisku online
 - Zwiększenie świadomości zdrowotnej i budowanie nawyku regularnej obserwacji własnego cyklu
 - Zaprojektowanie i wdrożenie nowoczesnej aplikacji webowej w architekturze klient-serwer
 - Poznanie w praktyce języka JavaScript oraz technologii takich jak React, Node.js, Express i MongoDB
@@ -51,7 +48,7 @@ FemTrack oferuje:
 - Edytowalny formularz symptomów i kalendarz z graficznymi oznaczeniami
 - System alertów zdrowotnych (nieregularność, opóźnienia, silne objawy)
 - Profil z edytowalnymi danymi (imię, e-mail, dane zdrowotne, hasło, zdjęcie profilowe)
-- Przechowywanie historii cykli, objawów i konsultacji
+- Przechowywanie historii cykli, objawów i rozmów
 
 ### 🩺 Konto lekarza:
 - Logowanie z użyciem ID i hasła
@@ -92,6 +89,22 @@ Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi s
 
 ## Wygląd aplikacji
 
+Okno rejestracji
+<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 10 16" src="https://github.com/user-attachments/assets/b05a70f3-af63-4a0e-8320-d1a0ca5479af" />
 
+Okno logowania
+<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 11 07" src="https://github.com/user-attachments/assets/6b83439e-719f-4d71-b482-9f8e387ca4f8" />
+
+Panel użytkowniczki
+<img width="958" alt="Zrzut ekranu 2025-05-15 o 22 12 02" src="https://github.com/user-attachments/assets/c046b7fb-ca86-48d8-a095-375533faddbc" />
+
+Formularz symptomów
+<img width="917" alt="Zrzut ekranu 2025-05-15 o 22 12 37" src="https://github.com/user-attachments/assets/a1bbcd92-4dc2-4fdc-9232-4c8826c0a06e" />
+
+Profil użytkowniczki
+<img width="489" alt="Zrzut ekranu 2025-05-15 o 22 13 20" src="https://github.com/user-attachments/assets/d76602e5-a404-425b-9d6a-8ba0ea2feed8" />
+
+Alerty zdrowotne
+<img width="935" alt="Zrzut ekranu 2025-05-15 o 22 14 06" src="https://github.com/user-attachments/assets/4446a07e-0f00-4837-a936-d58e9248b932" />
 
 ---
