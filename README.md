@@ -35,7 +35,7 @@ FemTrack oferuje:
 - Projektowanie i implementacja nowoczesnej aplikacji webowej w architekturze klient-serwerowej
 - Poznanie w praktyce języka JavaScript oraz technologii takich jak React, Node.js, Express i MongoDB
 - Zrozumienie mechanizmów autoryzacji, wymiany danych, przesyłania plików i komunikacji w czasie rzeczywistym
-- Rozwijanie umiejętności projektowania interfejsu użytkownika oraz budowania skalowalnych systemów webowych
+- Rozwijanie umiejętności projektowania interfejsu użytkownika
 
 ---
 
@@ -76,14 +76,14 @@ FemTrack oferuje:
 
 ---
 
-## Jak uruchomić projekt
+## Jak uruchomić projekt?
 
 Projekt składa się z dwóch głównych części:
 
-- [Frontend (React)](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/frontend/README.md)
-- [Backend (Node.js + Express)](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/backend/README.md)
+- [Frontend/README.md](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/frontend/README.md)
+- [Backend/README.md](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/backend/README.md)
 
-Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych plikach.
+Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych linkach.
 
 ---
 
@@ -102,7 +102,7 @@ Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi s
 <img width="976" alt="Zrzut ekranu 2025-05-15 o 22 12 37" src="https://github.com/user-attachments/assets/a1bbcd92-4dc2-4fdc-9232-4c8826c0a06e" />
 
 ### Profil użytkowniczki
-<img width="489" alt="Zrzut ekranu 2025-05-15 o 22 13 20" src="https://github.com/user-attachments/assets/d76602e5-a404-425b-9d6a-8ba0ea2feed8" />
+<img width="495" alt="Zrzut ekranu 2025-05-15 o 22 21 49" src="https://github.com/user-attachments/assets/53666332-f040-45d3-8837-bebda60b08de" />
 
 ### Alerty zdrowotne
 <img width="976" alt="Zrzut ekranu 2025-05-15 o 22 14 06" src="https://github.com/user-attachments/assets/4446a07e-0f00-4837-a936-d58e9248b932" />
