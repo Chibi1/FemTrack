@@ -1,10 +1,18 @@
-# FemTrack
+![Politechnika Gdańska](https://pg.edu.pl/files/wimio/styles/large/public/2021-04/logo-pg-eti.png?itok=kGzz7S79)
+
+## Politechnika Gdańska, Wydział Elektroniki, Telekomunikacji i Informatyki  
+**Kierunek:** Inżynieria Biomedyczna, specjalność: Informatyka w Medycynie  
+**Przedmiot:** Rozwój Aplikacji Internetowych w Medycynie  
+**Rok akademicki:** 2024/2025  
+**Prowadząca:** *dr inż. Anna Węsierska*
+
+---
 
 **FemTrack** to aplikacja webowa zaprojektowana z myślą o kobietach, umożliwiająca śledzenie cyklu menstruacyjnego oraz szybki kontakt z lekarzem w celu konsultacji. Aplikacja łączy funkcjonalność intuicyjnego kalendarza cyklu z możliwością prowadzenia rozmów w czasie rzeczywistym.
 
 ---
 
-## O projekcie
+## Opis projektu
 
 FemTrack oferuje:
 
@@ -16,6 +24,20 @@ FemTrack oferuje:
 - Czat na żywo z lekarzem
 - Archiwum rozmów i historia konsultacji
 - Formularz wywiadu zdrowotnego w czasie czatu
+
+---
+
+## Cele i założenia projektu
+
+- Ułatwienie codziennego monitorowania zdrowia i samopoczucia poprzez prowadzenie kalendarza cyklu oraz notowanie objawów fizycznych i emocjonalnych
+- Wsparcie kobiet w lepszym zrozumieniu swojego cyklu menstruacyjnego i zmian hormonalnych zachodzących w organizmie
+- Możliwość szybkiej i wygodnej konsultacji z lekarzem – zwłaszcza w sytuacjach niepokoju, takich jak opóźniony okres, silne objawy czy nietypowe zmiany
+- Skupienie na aspektach zdrowia ginekologicznego i hormonalnego, dzięki czemu użytkowniczki mogą uzyskać pomoc w zaufanym środowisku online
+- Zwiększenie świadomości zdrowotnej i budowanie nawyku regularnej obserwacji własnego cyklu
+- Zaprojektowanie i wdrożenie nowoczesnej aplikacji webowej w architekturze klient-serwer
+- Poznanie w praktyce języka JavaScript oraz technologii takich jak React, Node.js, Express i MongoDB
+- Zrozumienie mechanizmów autoryzacji, wymiany danych, przesyłania plików i komunikacji w czasie rzeczywistym
+- Rozwijanie umiejętności projektowania interfejsu użytkownika oraz budowania skalowalnych systemów webowych
 
 ---
 
@@ -50,23 +72,25 @@ FemTrack oferuje:
 - **JWT + bcrypt.js** – autoryzacja i bezpieczne logowanie
 - **Multer** – obsługa przesyłania zdjęć profilowych
 
-### Real-time messaging:
+### Komunikacja:
 - **Socket.io** – czat na żywo pomiędzy użytkowniczką a lekarzem
 - **Firebase Firestore** (alternatywnie) – jako fallback dla komunikacji
 
 ---
 
-## Status projektu
+## Jak uruchomić projekt
 
-Projekt znajduje się w **aktywnym rozwoju**. Aktualnie wdrożone są główne funkcje cyklu, objawów i profilu.
+Projekt składa się z dwóch głównych części:
+
+- [Frontend (React)](frontend/README.md)
+- [Backend (Node.js + Express)](backend/README.md)
+
+Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych plikach.
 
 ---
 
-## Zespół
+## Wygląd aplikacji
 
-Projekt grupowy realizowany w ramach przedmiotu:  
-**"Rozwój aplikacji internetowych w medycynie"**  
-Opiekun: *dr inż. Anna Węsierska*  
-**Politechnika Gdańska, 2025**
+
 
 ---
