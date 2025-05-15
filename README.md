@@ -23,7 +23,7 @@ FemTrack oferuje:
 - Dostęp do listy zweryfikowanych lekarzy
 - Czat na żywo z lekarzem
 - Historia rozmów z lekarzami
-- Formularz wywiadu zdrowotnego w czasie czatu
+- Formularz wywiadu zdrowotnego w trakcie czatu z lekarzem
 
 ---
 
@@ -32,7 +32,7 @@ FemTrack oferuje:
 - Ułatwienie codziennego monitorowania zdrowia i samopoczucia poprzez prowadzenie kalendarza cyklu oraz notowanie objawów fizycznych i emocjonalnych
 - Możliwość szybkiej i wygodnej konsultacji z lekarzem – zwłaszcza w sytuacjach niepokoju, takich jak opóźniony okres, silne objawy czy nietypowe zmiany
 - Zwiększenie świadomości zdrowotnej i budowanie nawyku regularnej obserwacji własnego cyklu
-- Zaprojektowanie i wdrożenie nowoczesnej aplikacji webowej w architekturze klient-serwer
+- Projektowanie i implementacja nowoczesnej aplikacji webowej w architekturze klient-serwerowej
 - Poznanie w praktyce języka JavaScript oraz technologii takich jak React, Node.js, Express i MongoDB
 - Zrozumienie mechanizmów autoryzacji, wymiany danych, przesyłania plików i komunikacji w czasie rzeczywistym
 - Rozwijanie umiejętności projektowania interfejsu użytkownika oraz budowania skalowalnych systemów webowych
@@ -89,22 +89,22 @@ Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi s
 
 ## Wygląd aplikacji
 
-Okno rejestracji
+### Okno rejestracji
 <img width="976" alt="Zrzut ekranu 2025-05-15 o 22 10 16" src="https://github.com/user-attachments/assets/b05a70f3-af63-4a0e-8320-d1a0ca5479af" />
 
-Okno logowania
+### Okno logowania
 <img width="976" alt="Zrzut ekranu 2025-05-15 o 22 11 07" src="https://github.com/user-attachments/assets/6b83439e-719f-4d71-b482-9f8e387ca4f8" />
 
-Panel użytkowniczki
-<img width="958" alt="Zrzut ekranu 2025-05-15 o 22 12 02" src="https://github.com/user-attachments/assets/c046b7fb-ca86-48d8-a095-375533faddbc" />
+### Panel użytkowniczki
+<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 12 02" src="https://github.com/user-attachments/assets/c046b7fb-ca86-48d8-a095-375533faddbc" />
 
-Formularz symptomów
-<img width="917" alt="Zrzut ekranu 2025-05-15 o 22 12 37" src="https://github.com/user-attachments/assets/a1bbcd92-4dc2-4fdc-9232-4c8826c0a06e" />
+### Formularz symptomów
+<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 12 37" src="https://github.com/user-attachments/assets/a1bbcd92-4dc2-4fdc-9232-4c8826c0a06e" />
 
-Profil użytkowniczki
+### Profil użytkowniczki
 <img width="489" alt="Zrzut ekranu 2025-05-15 o 22 13 20" src="https://github.com/user-attachments/assets/d76602e5-a404-425b-9d6a-8ba0ea2feed8" />
 
-Alerty zdrowotne
-<img width="935" alt="Zrzut ekranu 2025-05-15 o 22 14 06" src="https://github.com/user-attachments/assets/4446a07e-0f00-4837-a936-d58e9248b932" />
+### Alerty zdrowotne
+<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 14 06" src="https://github.com/user-attachments/assets/4446a07e-0f00-4837-a936-d58e9248b932" />
 
 ---
