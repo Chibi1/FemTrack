@@ -241,8 +241,6 @@ const UserProfile = () => {
           currentPassword: '',
           password: '',
           confirmPassword: '',
-          name: data.name,
-          email: data.email,
         }));
         setEditingPersonalData(false);
       } else {
