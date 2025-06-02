@@ -19,7 +19,7 @@ FemTrack oferuje:
 - Intuicyjny kalendarz cyklu z zaznaczonymi dniami okresu i owulacji
 - Możliwość notowania objawów, nastroju i dolegliwości (różne formularze dla dni okresowych i nieokresowych)
 - Personalizowane alerty zdrowotne na podstawie wprowadzonych danych
-- Statystyki cyklu: długość cykli i krwawień przedstawione na wykresach 
+- Statystyki cyklu: długość poszczególnych cykli i krwawień przedstawione na wykresach 
 - Profil użytkowniczki z możliwością edycji danych i zdjęcia
 - Dostęp do listy zweryfikowanych lekarzy
 - Czat na żywo z lekarzem
@@ -82,8 +82,8 @@ FemTrack oferuje:
 
 Projekt składa się z dwóch głównych części:
 
-- [Frontend/README.md](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/backend/README.md)
-- [Backend/README.md](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/frontend/README.md)
+- [Frontend](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/backend/README.md)
+- [Backend](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/frontend/README.md)
 
 Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych linkach.
 
