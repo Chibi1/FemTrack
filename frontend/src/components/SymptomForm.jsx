@@ -126,7 +126,7 @@ function SymptomForm({ date, isPeriodDay, existingData, onSubmit, onClose }) {
       const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
       const method = existingData ? 'PUT' : 'POST';
   
-      const res = await fetch(`/api/symptoms/${formattedDate}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/symptoms/${formattedDate}`, {
         method,
         headers: {
           'Content-Type': 'application/json',

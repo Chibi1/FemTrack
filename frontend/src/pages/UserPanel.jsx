@@ -107,7 +107,7 @@ function UserPanel() {
   const fetchAlerts = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('/api/alerts', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/alerts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -125,7 +125,7 @@ function UserPanel() {
   const loadCycles = async () => {
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('/api/cycles', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cycles`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -173,7 +173,7 @@ function UserPanel() {
     const formattedDate = formatDateOnly(calendarDate);
 
     try {
-      const response = await fetch('/api/cycles/start', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/cycles/start`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -209,7 +209,7 @@ function UserPanel() {
       const confirmed = window.confirm('Czy chcesz usunąć ten cykl?');
       if (confirmed) {
         try {
-          const res = await fetch(`/api/cycles/${currentCycle._id}`, {
+          const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cycles/${currentCycle._id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -227,7 +227,7 @@ function UserPanel() {
     }
   
     try {
-      const res = await fetch(`/api/cycles/${currentCycle._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/cycles/${currentCycle._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -268,7 +268,7 @@ function UserPanel() {
     const formattedDate = formatDateOnly(clicked);
   
     try {
-      const res = await fetch(`/api/symptoms/${formattedDate}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/symptoms/${formattedDate}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -290,7 +290,7 @@ function UserPanel() {
     const token = localStorage.getItem('token');
   
     try {
-      const res = await fetch('/api/symptoms', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/symptoms`, {
         headers: { Authorization: `Bearer ${token}` },
       });
   

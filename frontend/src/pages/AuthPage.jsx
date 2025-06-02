@@ -36,7 +36,9 @@ function AuthPage() {
       return;
     }
 
-    const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
+    const endpoint = isRegister
+      ? `${import.meta.env.VITE_API_URL}/api/auth/register`
+      : `${import.meta.env.VITE_API_URL}/api/auth/login`;
 
     try {
       const body = isRegister

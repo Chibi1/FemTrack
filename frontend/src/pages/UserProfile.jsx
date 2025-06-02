@@ -69,7 +69,7 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch('/api/profile', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -186,7 +186,7 @@ const UserProfile = () => {
       formDataImage.append('profileImage', formData.profileImage);
 
       try {
-        const imgRes = await fetch('/api/profile/upload-avatar', {
+        const imgRes = await fetch(`${import.meta.env.VITE_API_URL}/api/profile/upload-avatar`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -220,7 +220,7 @@ const UserProfile = () => {
     }
 
     try {
-      const res = await fetch('/api/profile', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -259,7 +259,7 @@ const UserProfile = () => {
     if (!confirmed) return;
 
     try {
-      const res = await fetch('/api/auth/delete-self', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/delete-self`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

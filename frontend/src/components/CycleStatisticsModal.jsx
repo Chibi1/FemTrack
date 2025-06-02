@@ -14,7 +14,7 @@ export default function CycleStatisticsModal({ onClose }) {
 
   // Pobranie danych po załadowaniu komponentu
   useEffect(() => {
-    fetch('/api/cycles/statistics', {
+    fetch(`${import.meta.env.VITE_API_URL}/api/cycles/statistics`, {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       }
