@@ -281,6 +281,42 @@ router.delete('/:id', authenticate, requireRole('user'), async (req, res) => {
   }
 });
 
+/**
+ * Zwraca statystyki cykli dla zalogowanej użytkowniczki:
+ * - długość całego cyklu (jeśli znana),
+ * - długość krwawienia
+ * Używane w widoku statystyk w panelu użytkowniczki.
+ */
+router.get('/statistics', authenticate, requireRole('user'), async (req, res) => {
+  try {
+    const userId = req.user.userId;
 
+    // Pobierz cykle użytkowniczki od najnowszego
+    const cycles = await Cycle.find({ userId }).sort({ startDate: -1 });
+
+    const stats = cycles.map((cycle) => {
+      const start = new Date(cycle.startDate);
+      const periodEnd = new Date(cycle.endDate);
+      const periodLength = Math.floor((periodEnd - start) / (1000 * 60 * 60 * 24)) + 1;
+
+      // Oblicz datę końca całego cyklu (jeśli znana długość)
+      const cycleEnd = cycle.cycleLength
+        ? new Date(start.getTime() + (cycle.cycleLength - 1) * 24 * 60 * 60 * 1000)
+        : null;
+
+      return {
+        startDate: start.toISOString().split('T')[0],
+        endDate: cycleEnd ? cycleEnd.toISOString().split('T')[0] : null,
+        cycleLength: cycle.cycleLength || null,
+        periodLength
+      };
+    });
+
+    res.json(stats);
+  } catch (err) {
+    console.error('Błąd podczas generowania statystyk:', err);
+    res.status(500).json({ error: 'Błąd serwera przy generowaniu statystyk cyklu' });
+  }
+});
 
 module.exports = router;
