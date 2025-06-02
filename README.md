@@ -16,9 +16,10 @@
 
 FemTrack oferuje:
 
-- Intuicyjny kalendarz cyklu z zaznaczeniem dni okresu i owulacji
+- Intuicyjny kalendarz cyklu z zaznaczonymi dniami okresu i owulacji
 - Możliwość notowania objawów, nastroju i dolegliwości (różne formularze dla dni okresowych i nieokresowych)
 - Personalizowane alerty zdrowotne na podstawie wprowadzonych danych
+- Statystyki cyklu: długość cykli i krwawień przedstawione na wykresach 
 - Profil użytkowniczki z możliwością edycji danych i zdjęcia
 - Dostęp do listy zweryfikowanych lekarzy
 - Czat na żywo z lekarzem
@@ -32,7 +33,7 @@ FemTrack oferuje:
 - Ułatwienie codziennego monitorowania zdrowia i samopoczucia poprzez prowadzenie kalendarza cyklu oraz notowanie objawów fizycznych i emocjonalnych
 - Możliwość szybkiej i wygodnej konsultacji z lekarzem – zwłaszcza w sytuacjach niepokoju, takich jak opóźniony okres, silne objawy czy nietypowe zmiany
 - Zwiększenie świadomości zdrowotnej i budowanie nawyku regularnej obserwacji własnego cyklu
-- Projektowanie i implementacja nowoczesnej aplikacji webowej w architekturze klient-serwerowej
+- Projektowanie i implementacja nowoczesnej aplikacji webowej w architekturze klient-serwer
 - Poznanie w praktyce języka JavaScript oraz technologii takich jak React, Node.js, Express i MongoDB
 - Zrozumienie mechanizmów autoryzacji, wymiany danych, przesyłania plików i komunikacji w czasie rzeczywistym
 - Rozwijanie umiejętności projektowania interfejsu użytkownika
@@ -48,7 +49,8 @@ FemTrack oferuje:
 - Edytowalny formularz symptomów i kalendarz z graficznymi oznaczeniami
 - System alertów zdrowotnych (nieregularność, opóźnienia, silne objawy)
 - Profil z edytowalnymi danymi (imię, e-mail, dane zdrowotne, hasło, zdjęcie profilowe)
-- Przechowywanie historii cykli, objawów i rozmów
+- Statystyki cyklu: wykresy długości cykli i krwawień
+- Przechowywanie historii wprowadzanych danych
 
 ### 🩺 Konto lekarza:
 - Logowanie z użyciem ID i hasła
@@ -80,26 +82,37 @@ FemTrack oferuje:
 
 Projekt składa się z dwóch głównych części:
 
-- [Frontend/README.md](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/frontend/README.md)
-- [Backend/README.md](https://github.com/Chibi1/FemTrack/blob/development/rej-log-panel-uzytkowniczki/backend/README.md)
+- [Frontend/README.md](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/backend/README.md)
+- [Backend/README.md](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/frontend/README.md)
 
 Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych linkach.
+
+### Hosting
+
+Aplikacja została również wdrożona i jest dostępna online:
+
+- **Frontend** i **backend** zostały wdrożone na platformie **Render**  
+- Wersja demonstracyjna aplikacji dostępna jest pod adresem:  
+  [https://femtrack.onrender.com](https://femtrack.onrender.com)
 
 ---
 
 ## Wygląd aplikacji
 
 ### Okno rejestracji
-<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 10 16" src="https://github.com/user-attachments/assets/b05a70f3-af63-4a0e-8320-d1a0ca5479af" />
+<img width="1680" alt="Zrzut ekranu 2025-06-2 o 21 43 55" src="https://github.com/user-attachments/assets/b5d5f44a-bd4c-41ce-912d-1d3d778e3f98" />
 
 ### Okno logowania
-<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 11 07" src="https://github.com/user-attachments/assets/6b83439e-719f-4d71-b482-9f8e387ca4f8" />
+<img width="1680" alt="Zrzut ekranu 2025-06-2 o 21 43 50" src="https://github.com/user-attachments/assets/fc3b88f5-d47d-4f36-b279-ca6713795a3a" />
 
 ### Panel użytkowniczki
-<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 12 02" src="https://github.com/user-attachments/assets/c046b7fb-ca86-48d8-a095-375533faddbc" />
+<img width="1680" alt="Zrzut ekranu 2025-06-2 o 21 49 23" src="https://github.com/user-attachments/assets/a7865370-c19c-494e-b070-fdcb4687dc3d" />
 
 ### Formularz symptomów
 <img width="976" alt="Zrzut ekranu 2025-05-15 o 22 12 37" src="https://github.com/user-attachments/assets/a1bbcd92-4dc2-4fdc-9232-4c8826c0a06e" />
+
+### Statystyki cyklu
+<img width="1680" alt="Zrzut ekranu 2025-06-2 o 21 48 16" src="https://github.com/user-attachments/assets/8248d000-954e-480c-898b-2d741fe9378e" />
 
 ### Profil użytkowniczki
 <img width="495" alt="Zrzut ekranu 2025-05-15 o 22 21 49" src="https://github.com/user-attachments/assets/53666332-f040-45d3-8837-bebda60b08de" />
