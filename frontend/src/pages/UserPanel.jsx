@@ -81,7 +81,7 @@ function UserPanel() {
     const token = localStorage.getItem('token');
     if (!token) return (window.location.href = '/');
 
-    fetch('/panel-uzytkowniczki', {
+    fetch(`${import.meta.env.VITE_API_URL}/panel-uzytkowniczki`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(async (res) => {
