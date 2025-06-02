@@ -27,9 +27,10 @@ const app = express();
 
 // Konfiguracja CORS – umożliwia komunikację frontend <-> backend
 app.use(cors({
-  origin: 'http://localhost:5173',               // Adres frontendu (Vite)
+  origin: ['http://localhost:5173', 'https://femtrack.onrender.com'],  // Adres frontendu
   methods: ['GET', 'POST', 'PUT', 'DELETE'],     // Dozwolone metody HTTP
-  allowedHeaders: ['Content-Type', 'Authorization'] // Dozwolone nagłówki 
+  allowedHeaders: ['Content-Type', 'Authorization'], // Dozwolone nagłówki 
+  credentials: true 
 }));
 
 // Parsowanie JSON-ów w przychodzących żądaniach
