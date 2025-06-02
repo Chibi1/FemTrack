@@ -39,11 +39,15 @@ function AuthPage() {
     const endpoint = isRegister ? '/api/auth/register' : '/api/auth/login';
 
     try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const body = isRegister
+      ? JSON.stringify({ ...formData, role: 'user' })  // wymuszenie roli "user"
+      : JSON.stringify(formData);
+
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,  
+    });
 
       const data = await res.json();
 
@@ -127,14 +131,6 @@ function AuthPage() {
             required
             onChange={handleChange}
           />
-
-          {isRegister && (
-            <select name="role" onChange={handleChange} required defaultValue="">
-              <option value="" disabled>Wybierz typ konta</option>
-              <option value="user">Użytkowniczka</option>
-              <option value="doctor">Lekarz</option>
-            </select>
-          )}
 
           <button type="submit">
             {isRegister ? 'Zarejestruj się' : 'Zaloguj się'}

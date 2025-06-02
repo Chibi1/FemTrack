@@ -1,0 +1,91 @@
+.cycle-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cycle-modal-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 28px;
+  width: 640px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.cycle-modal-content .close-btn {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cycle-modal-content h3 {
+  margin-top: 30px;
+  font-size: 1.2rem;
+  color: #444;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cycle-modal-content p {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.cycle-modal-content .chart-list {
+  margin-top: 1rem;
+}
+
+.cycle-modal-content .chart-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.cycle-modal-content .dates {
+  width: 200px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.cycle-modal-content .bar-container {
+  display: flex;
+  height: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 12px;
+  width: 280px;
+  background: #f0f0f0;
+}
+
+.cycle-modal-content .bar-period {
+  background: #ff7a7a;
+  height: 100%;
+}
+
+.cycle-modal-content .bar-cycle {
+  background: #9db2ff;
+  height: 100%;
+}
+
+.cycle-modal-content .length {
+  width: 60px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: right;
+  color: #333;
+}
+
+

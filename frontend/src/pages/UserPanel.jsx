@@ -5,7 +5,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './UserPanel.css';
 import SymptomForm from '../components/SymptomForm';
-
+import CycleStatisticsModal from '../components/CycleStatisticsModal';
 
 // Zwraca wszystkie dni między startDate a endDate (włącznie)
 // Wykorzystywane do podświetlania dni okresu w kalendarzu
@@ -66,6 +66,8 @@ function UserPanel() {
   const [alerts, setAlerts] = useState([]);
 
   const [showAlertsModal, setShowAlertsModal] = useState(false);
+
+  const [showStatsModal, setShowStatsModal] = useState(false);
 
   useEffect(() => {
     if (location.state?.refreshAlerts) {
@@ -457,17 +459,24 @@ function UserPanel() {
             </>
           )}
         </div>
-        {/* Sekcja informacyjna po prawej stronie kalendarza z aktualnym i poprzednim cyklem */}
+        {/* Sekcja informacyjna po prawej stronie kalendarza z aktualnym i poprzednim cyklem + przycisk o statystykach */}
         <div className="info-container">
           {currentCycle ? (
             renderCycle(currentCycle, 'Aktualny cykl', true)
           ) : (
             <p className="no-cycle">Brak aktualnego cyklu</p>
           )}
-
           {previousCycle && currentCycle && (
             renderCycle(previousCycle, 'Poprzedni cykl', false, previousCycle.cycleLength)
           )}
+          <button
+            className="start-period-button"
+            onClick={() => setShowStatsModal(true)}
+            disabled={editingMode}
+            style={editingMode ? { opacity: 0.4, pointerEvents: 'none' } : {}}
+          >
+            Zobacz swoje statystyki
+          </button>
         </div>
       </div>
       {showAlertsModal && (
@@ -485,7 +494,9 @@ function UserPanel() {
           </div>
         </div>
       )}
-
+    {showStatsModal && (
+      <CycleStatisticsModal onClose={() => setShowStatsModal(false)} />
+    )}
     </div>
   );
 }
