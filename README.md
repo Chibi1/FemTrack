@@ -92,8 +92,7 @@ Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi s
 Aplikacja została również wdrożona i jest dostępna online:
 
 - **Frontend** i **backend** zostały wdrożone na platformie **Render**  
-- Wersja demonstracyjna aplikacji dostępna jest pod adresem:  
-  [https://femtrack.onrender.com](https://femtrack.onrender.com)
+- Wersja demonstracyjna aplikacji dostępna jest pod adresem: [https://femtrack.onrender.com](https://femtrack.onrender.com)
 
 ---
 
@@ -118,6 +117,6 @@ Aplikacja została również wdrożona i jest dostępna online:
 <img width="495" alt="Zrzut ekranu 2025-05-15 o 22 21 49" src="https://github.com/user-attachments/assets/53666332-f040-45d3-8837-bebda60b08de" />
 
 ### Alerty zdrowotne
-<img width="976" alt="Zrzut ekranu 2025-05-15 o 22 14 06" src="https://github.com/user-attachments/assets/4446a07e-0f00-4837-a936-d58e9248b932" />
+<img width="1680" alt="Zrzut ekranu 2025-06-2 o 21 54 11" src="https://github.com/user-attachments/assets/4f3bb21c-01dc-400c-a288-c640c2385280" />
 
 ---
