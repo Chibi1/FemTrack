@@ -91,7 +91,7 @@ Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi s
 
 Aplikacja została również wdrożona i jest dostępna online:
 
-- **Frontend** i **backend** zostały wdrożone na platformie **Render**  
+- Frontend i backend zostały wdrożone na platformie **Render**  
 - Wersja demonstracyjna aplikacji dostępna jest pod adresem: [https://femtrack.onrender.com](https://femtrack.onrender.com)
 
 ---
