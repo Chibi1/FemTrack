@@ -78,6 +78,13 @@ FemTrack oferuje:
 
 ---
 
+## Prezentacja działania aplikacji
+
+Zobacz, jak działa FemTrack w praktyce:  
+▶ [LINK](https://youtu.be/aqrb2ur2HCo)
+
+---
+
 ## Jak uruchomić projekt?
 
 Projekt składa się z dwóch głównych części:
