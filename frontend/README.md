@@ -31,7 +31,17 @@ Powstanie folder `node_modules`, który jest wymagany do uruchomienia projektu.
 
 ---
 
-3. **Uruchom aplikację frontendową**
+3. **Utwórz plik `.env` i dodaj dane konfiguracyjne**
+
+W folderze `frontend/` utwórz plik `.env` i wklej:
+
+```
+VITE_API_URL=http://localhost:3001
+```
+
+---
+
+4. **Uruchom aplikację frontendową**
 
 Wpisz w terminalu:
 
@@ -41,10 +51,9 @@ npm run dev
 
 ---
 
-4. **Sprawdź, czy frontend działa**
+5. **Sprawdź, czy frontend działa**
 
-Po chwili aplikacja uruchomi się automatycznie w przeglądarce.  
-Jeśli nie, wejdź ręcznie na adres:
+Wejdź ręcznie na adres:
 
 ```
 http://localhost:5173
