@@ -80,7 +80,8 @@ FemTrack oferuje:
 
 ## Prezentacja działania aplikacji
 
-Zobacz, jak działa FemTrack w praktyce:  
+Zobacz, jak działa FemTrack w praktyce:
+
 ▶ [LINK](https://youtu.be/aqrb2ur2HCo)
 
 ---
@@ -89,8 +90,8 @@ Zobacz, jak działa FemTrack w praktyce:
 
 Projekt składa się z dwóch głównych części:
 
-- [Frontend](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/backend/README.md)
-- [Backend](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/frontend/README.md)
+- [Backend](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/backend/README.md)
+- [Frontend](https://github.com/Chibi1/FemTrack/blob/wersja-bez-czatu/frontend/README.md)
 
 Aby uruchomić aplikację lokalnie, zapoznaj się z instrukcjami znajdującymi się w powyższych linkach.
 
